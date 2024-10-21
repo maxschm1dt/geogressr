@@ -1,8 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 import json
 import pycountry
-from babel import Locale
-import langcodes
 import requests
 
 app = Flask(__name__)
@@ -17,7 +15,7 @@ def get_geojson():
         geojson_data = json.load(file)
     return geojson_data
 
-@app.route('/trigger-coutry-update', methods=['POST'])
+@app.route('/trigger-country-update', methods=['POST'])
 def update_coutry():
     iso = request.json.get('ISO2').lower()
     
@@ -33,11 +31,15 @@ def get_country_data(iso) -> json:
     if restcountries_response.status_code == 200:
         country_data = restcountries_response.json()
 
-    native_country_names = country_data[0]["name"]["nativeName"]
-    native_country_name = ""
+    native_country_names_json = country_data[0]["name"]["nativeName"]#
+    native_country_names = []
 
-    for a, item in native_country_names.items():
-        native_country_name += item.get("common") + ", "
+    for a, item in native_country_names_json.items():
+        native_country_names.append(item.get("common"))
+
+    
+    native_country_name = ', '.join(native_country_names)
+
     
 
     print(native_country_name)

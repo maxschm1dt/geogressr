@@ -21,7 +21,7 @@ fetch('/get-geojson')
                 layer.on('click', () =>{
                     var country_ISO2 = feature.properties.ISO_A2;
                     
-                    fetch('/trigger-coutry-update', {
+                    fetch('/trigger-country-update', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
