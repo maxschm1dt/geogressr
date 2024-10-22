@@ -50,7 +50,8 @@ def get_country_data(iso) -> json:
     return jsonify({"flag_url": flag_url,
                     "name": country.name,
                     "native_name": native_country_name,
-                    "tld" : tld
+                    "tld" : tld,
+                    "plate_path": f"res/plates/front_{iso}.png"
                     })
 
 if __name__ == '__main__':
