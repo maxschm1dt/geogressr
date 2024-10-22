@@ -77,6 +77,5 @@ function update_country_info(info){
     table.rows[0].insertCell(3).innerHTML = info.driving
     table.rows[0].insertCell(4).innerHTML = info.currency
 
-    //document.getElementById("image_grid").innerHTML = `<img id="" src="${info.plate_path}" alt="" width=200px></img>`
-
+    document.getElementById("image_grid").innerHTML = `<img id="" src="${info.plate_path}" alt="" width=200px></img>`
 }
