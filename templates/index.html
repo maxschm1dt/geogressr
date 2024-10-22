@@ -8,6 +8,14 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
     <style>
+        body{
+            margin: 0%;
+        }
+
+        img{
+            margin: auto;
+        }
+
         .container {
             display: flex;
             justify-content: space-between;
@@ -19,6 +27,7 @@
             padding-inline: 10px;
             background-color: #f0f0f0;
             box-sizing: border-box;
+            height: 100%;
         }
 
         table{
@@ -50,6 +59,7 @@
                         <th>Language</th>
                     </tr>
                 </thead>
+                <tbody id="info_table_body"></tbody>
             </table>
         </div>
 

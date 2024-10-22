@@ -40,6 +40,15 @@ fetch('/get-geojson')
 });
 
 function update_country_info(info){
-    document.getElementById("flag_img").src = info.flag_url;
-    document.getElementById("top_line").innerHTML = info.name + " / " + info.native_name;
+    //document.getElementById("flag_img").src = info.flag_url;
+    document.getElementById("top_line").innerHTML = info.name + " <br> " + info.native_name;
+    var table = document.getElementById('info_table_body');
+
+    if(table.rows.length == 0)
+        table.insertRow();
+
+    table.rows[0].innerHTML = "";
+    table.rows[0].insertCell(0).innerHTML = `<img id="" src="${info.flag_url}" alt="" width=40px></img>`;
+    table.rows[0].insertCell(1).innerHTML = info.tld
+
 }

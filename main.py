@@ -31,7 +31,7 @@ def get_country_data(iso) -> json:
     if restcountries_response.status_code == 200:
         country_data = restcountries_response.json()
 
-    native_country_names_json = country_data[0]["name"]["nativeName"]#
+    native_country_names_json = country_data[0]["name"]["nativeName"]
     native_country_names = []
 
     for a, item in native_country_names_json.items():
@@ -40,15 +40,17 @@ def get_country_data(iso) -> json:
     
     native_country_name = ', '.join(native_country_names)
 
+    tld = country_data[0]["tld"]
     
 
     print(native_country_name)
 
-    flag_url = f"https://flagcdn.com/w640/{iso}.png"
+    flag_url = f"https://flagcdn.com/w40/{iso}.png"
 
     return jsonify({"flag_url": flag_url,
                     "name": country.name,
-                    "native_name": native_country_name
+                    "native_name": native_country_name,
+                    "tld" : tld
                     })
 
 if __name__ == '__main__':
