@@ -1,7 +1,9 @@
 from flask import Flask, render_template, jsonify, request
 import json
-import pycountry
-import requests
+
+
+with open('static/res/data.json') as data_file:
+    data = json.load(data_file)
 
 app = Flask(__name__)
 
@@ -11,47 +13,40 @@ def home():
 
 @app.route('/get-geojson')
 def get_geojson():
-    with open('selected_countries.geojson') as file:
-        geojson_data = json.load(file)
-    return geojson_data
+    return data
 
 @app.route('/trigger-country-update', methods=['POST'])
 def update_coutry():
-    iso = request.json.get('ISO2').lower()
-    
+    iso = request.json.get('iso')
     return get_country_data(iso)
 
+def get_properties_from_iso(iso):
+    for d in data['features']:
+        properties = d['properties']
+        if properties.get('iso').upper() == str(iso).upper():
+            return properties
+    return jsonify()
 
-def get_country_data(iso) -> json:
-    country = pycountry.countries.get(alpha_2=iso)
 
-    restcountries_url = f"https://restcountries.com/v3.1/alpha/{iso.lower()}"
-    restcountries_response = requests.get(restcountries_url)
+def get_country_data( iso) -> json:
+    properties = get_properties_from_iso(iso)
 
-    if restcountries_response.status_code == 200:
-        country_data = restcountries_response.json()
+    flag_url = f"https://flagcdn.com/w40/{str(iso).lower()}.png"
 
-    native_country_names_json = country_data[0]["name"]["nativeName"]
-    native_country_names = []
+    #Plates:
+    default_plate = 'static/res/plates/plate.png'
+    front_plate = f'static/res/plates/front_{iso}.png'
+    back_plate = f'static/res/plates/front_{iso}.png'
 
-    for a, item in native_country_names_json.items():
-        native_country_names.append(item.get("common"))
-
-    
-    native_country_name = ', '.join(native_country_names)
-
-    tld = country_data[0]["tld"]
-    
-
-    print(native_country_name)
-
-    flag_url = f"https://flagcdn.com/w40/{iso}.png"
 
     return jsonify({"flag_url": flag_url,
-                    "name": country.name,
-                    "native_name": native_country_name,
-                    "tld" : tld,
-                    "plate_path": f"res/plates/front_{iso}.png"
+                    "name": properties['name'],
+                    "native_name": properties['native_name'],
+                    "tld" : properties['tld'],
+                    "calling_code" : properties['calling_code'],
+                    "driving" : properties['driving'],
+                    "currency" : properties['currency'],
+                    "plate_path": default_plate
                     })
 
 if __name__ == '__main__':
