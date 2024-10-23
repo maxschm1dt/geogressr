@@ -77,6 +77,16 @@ function update_country_info(info){
     table.rows[0].insertCell(3).innerHTML = info.driving
     table.rows[0].insertCell(4).innerHTML = info.currency
 
-    document.getElementById("image_grid").innerHTML = `<img id="" src="${info.plate_path}" alt="" width=200px></img>`
+    document.getElementById("image_grid").innerHTML = ""
+        + `<img id="" src="${info.plate_path}" alt="" ></img>`
+        + `<img id="" src="${info.sign_1_path}" alt="" ></img>`
+        + `<img id="" src="${info.sign_2_path}" alt="" ></img>`
+        + `<img id="" src="${info.roadmarks_path}" alt="" ></img>`
+        + `<img id="" src="${info.utility_poles_path}" alt="" ></img>`
+        + `<img id="" src="${info.extra_1_path}" alt="" ></img>`
+        + `<img id="" src="${info.extra_2_path}" alt="" ></img>`
+        + `<img id="" src="${info.extra_3_path}" alt="" ></img>`
+        + `<img id="" src="${info.extra_4_path}" alt="" ></img>`
+    
     document.getElementById("detail").innerHTML = info.detail
 }

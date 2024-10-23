@@ -8,6 +8,9 @@ with open('static/res/data.json') as data_file:
 
 app = Flask(__name__)
 
+def get_path_if_exists(path):
+    return "static/res/empty.png" if not os.path.exists(path) else path
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -34,10 +37,20 @@ def get_country_data( iso) -> json:
 
     flag_url = f"https://flagcdn.com/w40/{str(iso).lower()}.png"
 
-    #plates:
-    default_plate = 'static/res/plates/plate.png'
-    front_plate = f'static/res/plates/front_{iso}.png'
-    back_plate = f'static/res/plates/front_{iso}.png'
+    plate_path = get_path_if_exists(f'static/res/plates/{iso}.png')
+
+    #europe: warn & zebra / otherwise stop & ?
+    sign_1 = get_path_if_exists(f'static/res/signs/{iso}_1.png')
+    sign_2 = get_path_if_exists(f'static/res/signs/{iso}_2.png')
+
+    roadmarks = get_path_if_exists(f'static/res/road/{iso}_road.png')
+
+    utility_poles = get_path_if_exists(f'static/res/road/{iso}_pole.png')
+
+    extra_1 = get_path_if_exists(f'static/res/extra/{iso}_1.png')
+    extra_2 = get_path_if_exists(f'static/res/extra/{iso}_2.png')
+    extra_3 = get_path_if_exists(f'static/res/extra/{iso}_3.png')
+    extra_4 = get_path_if_exists(f'static/res/extra/{iso}_4.png')
 
     #markdowns:
     detail_path = f"static/res/htmls/{str(iso).lower()}.html"
@@ -56,7 +69,15 @@ def get_country_data( iso) -> json:
                     "calling_code" : properties['calling_code'],
                     "driving" : properties['driving'],
                     "currency" : properties['currency'],
-                    "plate_path": default_plate,
+                    "plate_path": plate_path,
+                    "sign_1_path" : sign_1,
+                    "sign_2_path" : sign_2,
+                    "roadmarks_path" : roadmarks,
+                    "utility_poles_path" : utility_poles,
+                    "extra_1_path" : extra_1,
+                    "extra_2_path" : extra_2,
+                    "extra_3_path" : extra_3,
+                    "extra_4_path" : extra_4,
                     "detail" : detail
                     })
 
