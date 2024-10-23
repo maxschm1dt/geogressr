@@ -10,4 +10,4 @@ for root, dirs, files in os.walk(input_dir):
         if file.endswith('.md'):
             md_file_path = os.path.join(root, file)
 
-            html_content = pypandoc.convert_file(md_file_path, 'html', encoding='UTF-8', outputfile=(f'static/res/htmls/{file[:-3]}.html'))
+            html_content = pypandoc.convert_file(md_file_path, 'html', outputfile=(f'static/res/htmls/{file[:-3]}.html'))

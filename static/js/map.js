@@ -54,7 +54,6 @@ fetch('/get-geojson')
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data.url)
                         update_country_info(data)
                     })
                 })
@@ -64,7 +63,8 @@ fetch('/get-geojson')
 });
 
 function update_country_info(info){
-    document.getElementById("top_line").innerHTML = info.name + " <br> " + info.native_name;
+    document.getElementById("top_line").innerHTML = info.name;
+    document.getElementById("top_line2").innerHTML = `native name(s): ${info.native_name}`;
     var table = document.getElementById('info_table_body');
 
     if(table.rows.length == 0)
