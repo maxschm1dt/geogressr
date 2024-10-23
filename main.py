@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 import json
+import os
 
 
 with open('static/res/data.json') as data_file:
@@ -33,20 +34,30 @@ def get_country_data( iso) -> json:
 
     flag_url = f"https://flagcdn.com/w40/{str(iso).lower()}.png"
 
-    #Plates:
+    #plates:
     default_plate = 'static/res/plates/plate.png'
     front_plate = f'static/res/plates/front_{iso}.png'
     back_plate = f'static/res/plates/front_{iso}.png'
 
+    #markdowns:
+    detail_path = f"static/res/htmls/{str(iso).lower()}.html"
+    detail = ""
+
+    if os.path.exists(detail_path):
+        with open(detail_path, encoding='UTF-8') as detail_file:
+            detail = detail_file.read()
+
 
     return jsonify({"flag_url": flag_url,
+                    "iso" : iso,
                     "name": properties['name'],
                     "native_name": properties['native_name'],
                     "tld" : properties['tld'],
                     "calling_code" : properties['calling_code'],
                     "driving" : properties['driving'],
                     "currency" : properties['currency'],
-                    "plate_path": default_plate
+                    "plate_path": default_plate,
+                    "detail" : detail
                     })
 
 if __name__ == '__main__':
