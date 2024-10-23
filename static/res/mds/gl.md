@@ -1,0 +1,1 @@
+![coverage](static\res\mds\img\gl_01.png)
